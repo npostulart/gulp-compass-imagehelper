@@ -29,5 +29,13 @@
     "url": "https://github.com/phlppschrr/gulp-compass-imagehelper"
   },
   "license": "MIT",
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "^2.3.3"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "engines": {
+    "node": ">= 0.12"
+  }
 }
