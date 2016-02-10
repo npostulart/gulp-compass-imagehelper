@@ -19,7 +19,7 @@ module.exports = function (options) {
     }
 
     if (!options.template) {
-        options.template = path.join(__dirname, 'compass-imagehelper.mustache');
+        options.template = path.join(__dirname, 'sass-image-template.mustache');
     }
 
     if (options.includeData !== false) {
@@ -31,7 +31,7 @@ module.exports = function (options) {
     }
 
     if (!options.targetFile) {
-        options.targetFile = '_compass-imagehelper.scss';
+        options.targetFile = '_sass-image.scss';
     }
 
     if (!options.prefix) {

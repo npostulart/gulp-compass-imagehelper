@@ -60,7 +60,7 @@
   @function image-url($image, $only-path: false, $cache-buster: false) {
     $result: $compass-imagehelper-path-prefix + $image;
 
-    @if not (image-exists($image)) {
+    @if not(image-exists($image)) {
       @warn "Image '#{$image}' not found.";
     } @else {
       @if (type-of($cache-buster) == string) {

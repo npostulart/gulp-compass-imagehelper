@@ -1,18 +1,17 @@
-var gulp               = require('gulp');
-var sass               = require('gulp-sass');
-var compassImagehelper = require('..');
-
+var gulp      = require('gulp');
+var sass      = require('gulp-sass');
+var sassImage = require('..');
 
 var paths = {
     images: 'images/**/*.+(jpeg|jpg|png|gif|svg)',
     sass: 'sass/**/*.scss'
 };
 
-gulp.task('compass-imagehelper', function (cb) {
+gulp.task('sass-image', function (cb) {
     return gulp.src(paths.images)
-            .pipe(compassImagehelper({
-                // targetFile: '_generated-imagehelper.scss', // default target filename is '_compass-imagehelper.scss'
-                // template: 'your-compass-imagehelper.mustache',
+            .pipe(sassImage({
+                // targetFile: '_generated-imagehelper.scss', // default target filename is '_sass-image.scss'
+                // template: 'your-sass-image-template.mustache',
                 images_path: 'images/',
                 css_path: 'css/',
                 prefix: 'icon--'
@@ -26,8 +25,7 @@ gulp.task('sass', function (cb) {
             .pipe(gulp.dest('./css'));
 });
 
-
-gulp.task('watch', ['compass-imagehelper'], function () {
-    gulp.watch(paths.images, ['compass-imagehelper']);
+gulp.task('watch', ['sass-image'], function () {
+    gulp.watch(paths.images, ['sass-image']);
     gulp.watch(paths.sass, ['sass']);
 });

@@ -26,6 +26,6 @@
   min-height: 48px; }
 
 .icon--imageurl {
-  background-image: url('../images/battery_50.png');
+  background-image: url("/battery_50.png");
   padding-left: 58px;
   min-height: 48px; }

@@ -1,8 +1,11 @@
 {
-  "name": "gulp-compass-imagehelper",
-  "version": "0.2.10",
-  "description": "gulp plugin for providing the compass imagehelper functions to node-sass enviroments.",
-  "author": "Philipp Schreier <git@rgb10.de>",
+  "name": "gulp-sass-image",
+  "version": "1.0.0",
+  "description": "gulp plugin for providing the compass like image functions to node-sass enviroments.",
+  "author": "Niklas Postulart <@niklaspostulart>",
+  "contributors": [
+    "Philipp Schreier <git@rgb10.de>"
+  ],
   "keywords": [
     "gulpplugin",
     "base64",
@@ -26,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/phlppschrr/gulp-compass-imagehelper"
+    "url": "https://github.com/npostulart/gulp-sass-image"
   },
   "license": "MIT",
   "devDependencies": {}

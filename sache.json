@@ -1,5 +1,5 @@
 {
-  "name": "gulp-compass-imagehelper",
+  "name": "gulp-sass-image",
   "description": "gulp plugin for providing the compass imagehelper functions to node-sass enviroments",
   "tags": ["node-sass", "compass", "gulp"]
 }

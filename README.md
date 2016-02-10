@@ -1,5 +1,5 @@
-# gulp-compass-imagehelper
-> compass-imagehelper [Gulp](https://github.com/gulpjs/gulp) plugin for polyfilling the compass imagehelper functions to node-sass enviroments.
+# gulp-sass-image
+> [Gulp](https://github.com/gulpjs/gulp) plugin for polyfilling the compass imagehelper functions to node-sass enviroments.
 
 This plugin generates a helper .scss file, which you have to @import into your own sass project. The generated sass file acts as a polyfill: 
 Inside the generated file is a sass map which contains all the image infos including a inlined data version. 
@@ -18,21 +18,21 @@ Additional there are the following helper function which mimic the native functi
 
 ## Install
 ```shell
-npm install gulp-compass-imagehelper --save-dev
+npm install gulp-sass-image --save-dev
 ```
 
 ## Example Usage
 ```javascript
-var compassImagehelper = require('gulp-compass-imagehelper');
+var sassImage = require('gulp-sass-image');
 
-gulp.task('compass-imagehelper', function () {
+gulp.task('sass-image', function () {
     return gulp.src('_sources/images/**/*.+(jpeg|jpg|png|gif|svg)')
         .pipe(compassImagehelper({
-            targetFile: '_generated-imagehelper.scss', // default target filename is '_compass-imagehelper.scss'
-            // template: 'your-compass-imagehelper.mustache',
+            targetFile: '_generated-imagehelper.scss', // default target filename is '_sass-image.scss'
+            // template: 'your-sass-image-template.mustache',
             images_path: 'assets/images/',
             css_path: 'assets/css/',
-            prefix: 'icon--'
+            prefix: 'icon-'
         }))
         .pipe(gulp.dest('sass'));
 });
@@ -67,8 +67,9 @@ Your mustache template can use all of theses properties. The default template on
 * ```items[i].hash``` MD5 Hash of the file, used for cache-busting
 
 ## Credits
+* Thanks to [Philipp Schreier](https://github.com/phlppschrr) who built this plugin initially as [gulp-compass-imagehelper](https://github.com/phlppschrr/gulp-compass-imagehelper)
 * Thanks to Hugo Giraudel: I included two sass functions for casting string to number [found in his blog post.](http://hugogiraudel.com/2014/01/15/sass-string-to-number/) 
-* The icons in the example directory are taken from [Google/Material Design Icons](https://github.com/google/material-design-icons) 
+* The icons in the example directory are taken from [Google/Material Design Icons](https://github.com/google/material-design-icons)
 * Some code lines are taken from [https://github.com/Sunify/gulp-baseimg](https://github.com/Sunify/gulp-baseimg)
 
 ### License
