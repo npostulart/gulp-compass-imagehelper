@@ -1,11 +1,17 @@
 # Changelog
 
+## 1.0.2 (2016-04-27)
+
+Bugfixes:
+
+  - removed check for function exists due to update in libsass (https://github.com/sass/libsass/issues/1550)
+
 ## 1.0.1 (2016-02-11)
 
 Improvements:
 
   - updated image-size plugin for better SVG dimension lookup
-  - added jshint and jscs for linting
+  - added jscs for linting
 
 ## 1.0.0 (2016-02-10)
 
