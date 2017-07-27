@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.3 (2017-07-27)
+
+Improvements:
+
+- merged pull request #1
+  + Don't encode svg data in base64, but output escaped utf8 version
+- added .npmignore file
+
 ## 1.0.2 (2016-04-27)
 
 Bugfixes:
