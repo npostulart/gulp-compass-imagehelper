@@ -14,7 +14,6 @@ module.exports = function(options) {
   'use strict';
 
   var images = [];
-  var encoding = 'base64';
 
   if (!options) {
     options = {};
@@ -104,15 +103,25 @@ module.exports = function(options) {
     }
 
     var imageInfo = {};
-    var data = file.contents.toString(encoding);
+    var encoding = 'base64';
+    var data;
 
     var mimetype = mime.lookup(file.path);
     var dimensions;
 
     if (mimetype == 'image/svg+xml') {
       dimensions = getSvgDimensions(file);
+      encoding = 'charset=utf8';
+      data = file.contents.toString('utf8');
+      data = data.replace(/'/g, '"');
+      data = data.replace(/\s+/g, " ");
+      data = data.replace(/[{}\|\\\^~\[\]`"<>#%]/g, function(match) {
+        return '%'+match[0].charCodeAt(0).toString(16).toUpperCase();
+      });
+
     } else {
       dimensions = sizeOf(file.path);
+      data = file.contents.toString(encoding);
     }
 
     imageInfo.width     = dimensions.width;
