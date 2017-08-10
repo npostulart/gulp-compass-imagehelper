@@ -115,7 +115,7 @@ module.exports = function(options) {
       data = file.contents.toString('utf8');
       data = data.replace(/'/g, '"');
       data = data.replace(/\s+/g, " ");
-      data = data.replace(/[{}\|\\\^~\[\]`"<>#%]/g, function(match) {
+      data = data.replace(/[\(\){}\|\\\^~\[\]`"<>#%]/g, function(match) {
         return '%'+match[0].charCodeAt(0).toString(16).toUpperCase();
       });
 
