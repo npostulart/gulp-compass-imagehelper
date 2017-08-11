@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.4 (2017-08-11)
+
+Improvements:
+
+- merged pull request #2
+  + Fixed missed escape of round parentheses within SVG images
+
 ## 1.0.3 (2017-07-27)
 
 Improvements:
