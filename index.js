@@ -115,7 +115,7 @@ module.exports = function(options) {
       data = file.contents.toString('utf8');
       data = data.replace(/'/g, '"');
       data = data.replace(/\s+/g, " ");
-      data = data.replace(/[\(\){}\|\\\^~\[\]`"<>#%]/g, function(match) {
+      data = data.replace(/[\(\){}\|\\\^~\[\]`"\'<>#%]/g, function(match) {
         return '%'+match[0].charCodeAt(0).toString(16).toUpperCase();
       });
 
@@ -135,7 +135,7 @@ module.exports = function(options) {
     // Replace /, \, . and @ with -
     imageInfo.fullname  = imageInfo.path.replace(/[\/\\\.@]/g, '-');
     imageInfo.hash      = md5(file.contents);
-    imageInfo.data      = 'url(data:' + mimetype + ';' + encoding + ',' + data + ')';
+    imageInfo.data      = 'url(\'data:' + mimetype + ';' + encoding + ',' + data + '\')';
 
     images.push(imageInfo);
   };
