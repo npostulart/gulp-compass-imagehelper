@@ -9,141 +9,129 @@
   @return map-has-key($compass-imagehelper-imagesmap, $image);
 }
 
-@if not(function-exists('inline-image')) {
-  // Embeds the contents of an image directly inside your stylesheet, eliminating the need for another HTTP request. For small images, this can be a performance
-  // benefit at the cost of a larger generated CSS file.
-  @function inline-image($image) {
-    @if image-exists($image) {
-      $list: map-get($compass-imagehelper-imagesmap, $image);
-      @return unquote(map-get($list, 'data'));
-    }
-    @warn "Image '#{$image}' not found.";
-    @return null;
+// Embeds the contents of an image directly inside your stylesheet, eliminating the need for another HTTP request. For small images, this can be a performance
+// benefit at the cost of a larger generated CSS file.
+@function inline-image($image) {
+  @if image-exists($image) {
+    $list: map-get($compass-imagehelper-imagesmap, $image);
+    @return unquote(map-get($list, 'data'));
   }
+  @warn "Image '#{$image}' not found.";
+  @return null;
 }
 
-@if not(function-exists('image-width')) {
-  // Returns the width of the image found at the path supplied by $image relative to your project's images directory.
-  @function image-width($image) {
-    @if image-exists($image) {
-      $list: map-get($compass-imagehelper-imagesmap, $image);
-      $width: unquote(map-get($list, 'width'));
-      @if ($width and str-length($width) > 0) {
-        @return number($width) * 1px;
-      }
+// Returns the width of the image found at the path supplied by $image relative to your project's images directory.
+@function image-width($image) {
+  @if image-exists($image) {
+    $list: map-get($compass-imagehelper-imagesmap, $image);
+    $width: unquote(map-get($list, 'width'));
+    @if ($width and str-length($width) > 0) {
+      @return number($width) * 1px;
     }
-    @warn "Image '#{$image}' not found.";
-    @return null;
   }
+  @warn "Image '#{$image}' not found.";
+  @return null;
 }
 
-@if not(function-exists('image-height')) {
-  // Returns the height of the image found at the path supplied by $image relative to your project's images directory.
-  @function image-height($image) {
-    @if image-exists($image) {
-      $list: map-get($compass-imagehelper-imagesmap, $image);
-      $height: unquote(map-get($list, 'height'));
-      @if ($height and str-length($height) > 0) {
-        @return number($height) * 1px;
-      }
+// Returns the height of the image found at the path supplied by $image relative to your project's images directory.
+@function image-height($image) {
+  @if image-exists($image) {
+    $list: map-get($compass-imagehelper-imagesmap, $image);
+    $height: unquote(map-get($list, 'height'));
+    @if ($height and str-length($height) > 0) {
+      @return number($height) * 1px;
     }
-    @warn "Image '#{$image}' not found.";
-    @return null;
   }
+  @warn "Image '#{$image}' not found.";
+  @return null;
 }
 
-@if not(function-exists('image-url')) {
-  // Generates a path to an asset found relative to the project's images directory.
-  // Passing a true value as the second argument will cause only the path to be returned instead of a url() function
-  // The third argument is used to control the cache buster on a per-use basis. When set to false no cache buster will be used.
-  // When true a md5-hash of the file is appended to the url. When a string, that value will be used as the cache buster.
-  @function image-url($image, $only-path: false, $cache-buster: false) {
-    $result: $compass-imagehelper-path-prefix + $image;
+// Generates a path to an asset found relative to the project's images directory.
+// Passing a true value as the second argument will cause only the path to be returned instead of a url() function
+// The third argument is used to control the cache buster on a per-use basis. When set to false no cache buster will be used.
+// When true a md5-hash of the file is appended to the url. When a string, that value will be used as the cache buster.
+@function image-url($image, $only-path: false, $cache-buster: false) {
+  $result: $compass-imagehelper-path-prefix + $image;
 
-    @if not(image-exists($image)) {
-      @warn "Image '#{$image}' not found.";
+  @if not(image-exists($image)) {
+    @warn "Image '#{$image}' not found.";
+  } @else {
+    @if (type-of($cache-buster) == string) {
+      $result: $result + '?' + $cache-buster;
+    }
+
+    @if ($cache-buster == true) {
+      $list: map-get($compass-imagehelper-imagesmap, $image);
+      $hash: map-get($list, 'hash');
+      $result: $result + '?' + $hash;
+    }
+  }
+
+  $result: quote($result);
+
+  @if ($only-path == false) {
+    $result: url($result);
+  }
+
+  @return $result;
+}
+
+// Two helper functions for casting string to number by Hugo Giraudel
+// http://hugogiraudel.com/2014/01/15/sass-string-to-number/
+// http://sassmeister.com/gist/9647408
+@function _length($number, $unit) {
+  $strings: 'px' 'cm' 'mm' '%' 'ch' 'pica' 'in' 'em' 'rem' 'pt' 'pc' 'ex' 'vw' 'vh' 'vmin' 'vmax';
+  $units: 1px 1cm 1mm 1% 1ch 1 pica 1in 1em 1rem 1pt 1pc 1ex 1vw 1vh 1vmin 1vmax;
+  $index: index($strings, $unit);
+
+  @if not ($index) {
+    @warn "Unknown unit `#{$unit}`.";
+    @return false;
+  }
+
+  @return $number * nth($units, $index);
+}
+
+@function number($string) {
+  // Matrices
+  $strings: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9';
+  $numbers: 0 1 2 3 4 5 6 7 8 9;
+
+  // Result
+  $result: 0;
+  $divider: 0;
+  $minus: false;
+
+  // Looping through all characters
+  @for $i from 1 through str-length($string) {
+    $character: str-slice($string, $i, $i);
+    $index: index($strings, $character);
+
+    @if $character == '-' {
+      $minus: true;
+    } @else if $character == '.' {
+      $divider: 1;
     } @else {
-      @if (type-of($cache-buster) == string) {
-        $result: $result + '?' + $cache-buster;
+      @if not ($index) {
+        $result: if($minus, $result * -1, $result);
+        @return _length($result, str-slice($string, $i));
       }
 
-      @if ($cache-buster == true) {
-        $list: map-get($compass-imagehelper-imagesmap, $image);
-        $hash: map-get($list, 'hash');
-        $result: $result + '?' + $hash;
-      }
-    }
+      $number: nth($numbers, $index);
 
-    $result: quote($result);
-
-    @if ($only-path == false) {
-      $result: url($result);
-    }
-
-    @return $result;
-  }
-}
-
-@if not(function-exists('_length')) {
-  // Two helper functions for casting string to number by Hugo Giraudel
-  // http://hugogiraudel.com/2014/01/15/sass-string-to-number/
-  // http://sassmeister.com/gist/9647408
-  @function _length($number, $unit) {
-    $strings: 'px' 'cm' 'mm' '%' 'ch' 'pica' 'in' 'em' 'rem' 'pt' 'pc' 'ex' 'vw' 'vh' 'vmin' 'vmax';
-    $units: 1px 1cm 1mm 1% 1ch 1 pica 1in 1em 1rem 1pt 1pc 1ex 1vw 1vh 1vmin 1vmax;
-    $index: index($strings, $unit);
-
-    @if not ($index) {
-      @warn "Unknown unit `#{$unit}`.";
-      @return false;
-    }
-
-    @return $number * nth($units, $index);
-  }
-}
-
-@if not(function-exists('number')) {
-  @function number($string) {
-    // Matrices
-    $strings: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9';
-    $numbers: 0 1 2 3 4 5 6 7 8 9;
-
-    // Result
-    $result: 0;
-    $divider: 0;
-    $minus: false;
-
-    // Looping through all characters
-    @for $i from 1 through str-length($string) {
-      $character: str-slice($string, $i, $i);
-      $index: index($strings, $character);
-
-      @if $character == '-' {
-        $minus: true;
-      } @else if $character == '.' {
-        $divider: 1;
+      @if $divider == 0 {
+        $result: $result * 10;
       } @else {
-        @if not ($index) {
-          $result: if($minus, $result * -1, $result);
-          @return _length($result, str-slice($string, $i));
-        }
-
-        $number: nth($numbers, $index);
-
-        @if $divider == 0 {
-          $result: $result * 10;
-        } @else {
-          // Move the decimal dot to the left
-          $divider: $divider * 10;
-          $number: $number / $divider;
-        }
-
-        $result: $result + $number;
+        // Move the decimal dot to the left
+        $divider: $divider * 10;
+        $number: $number / $divider;
       }
-    }
 
-    @return if($minus, $result * -1, $result);
+      $result: $result + $number;
+    }
   }
+
+  @return if($minus, $result * -1, $result);
 }
 
 $compass-imagehelper-path-prefix: '../images/';
@@ -152,13 +140,13 @@ $compass-imagehelper-imagesmap: (
   'battery_50.png': (
     width: '48',
     height: '48',
-    data: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAACYktHRAD/h4/MvwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAJJJREFUWMNjYBgFAw0YiVbpjcbfSpw2Jlr7YOhbgD8O2Bn0GUTwqvnP8JrhEsNP3AqY8VpgzCBKwAmMDNwMPAzPyA0iEaJCQZT8OGCkPJhHk+moBaMWjFowagHta7T/lJsyGgejFoxaMGrBqAW0t+APUWb8Jt+CXURZsIN8/4kDO6u/gNUObviLYROD2OhowOAGAMHYHKJlyqIPAAAAAElFTkSuQmCC)',
+    data: 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAACYktHRAD/h4/MvwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAJJJREFUWMNjYBgFAw0YiVbpjcbfSpw2Jlr7YOhbgD8O2Bn0GUTwqvnP8JrhEsNP3AqY8VpgzCBKwAmMDNwMPAzPyA0iEaJCQZT8OGCkPJhHk+moBaMWjFowagHta7T/lJsyGgejFoxaMGrBqAW0t+APUWb8Jt+CXURZsIN8/4kDO6u/gNUObviLYROD2OhowOAGAMHYHKJlyqIPAAAAAElFTkSuQmCC")',
     hash: '1a8e0e102ea58d745f7728554a080ca2'
   ),
   'battery_50.svg': (
     width: '48',
     height: '48',
-    data: 'url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4Ij48cGF0aCBkPSJNMjguOTMgMjdMMjIgNDBWMjloLTRsMS4wNy0ySDE0djE0LjMzQzE0IDQyLjggMTUuMTkgNDQgMTYuNjcgNDRoMTQuNjdjMS40NyAwIDIuNjctMS4xOSAyLjY3LTIuNjdWMjdoLTUuMDh6Ii8+PHBhdGggZmlsbC1vcGFjaXR5PSIuMyIgZD0iTTMxLjMzIDhIMjhWNGgtOHY0aC0zLjMzQzE1LjE5IDggMTQgOS4xOSAxNCAxMC42N1YyN2g1LjA3TDI2IDE0djExaDRsLTEuMDcgMkgzNFYxMC42N0MzNCA5LjE5IDMyLjgxIDggMzEuMzMgOHoiLz48L3N2Zz4=)',
+    data: 'url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2248%22 height=%2248%22 viewBox=%220 0 48 48%22%3E%3Cpath d=%22M28.93 27L22 40V29h-4l1.07-2H14v14.33C14 42.8 15.19 44 16.67 44h14.67c1.47 0 2.67-1.19 2.67-2.67V27h-5.08z%22/%3E%3Cpath fill-opacity=%22.3%22 d=%22M31.33 8H28V4h-8v4h-3.33C15.19 8 14 9.19 14 10.67V27h5.07L26 14v11h4l-1.07 2H34V10.67C34 9.19 32.81 8 31.33 8z%22/%3E%3C/svg%3E")',
     hash: '8af178def8e2ba93e999b275a85e011c'
   ),
 );
