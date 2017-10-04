@@ -135,7 +135,7 @@ module.exports = function(options) {
     // Replace /, \, . and @ with -
     imageInfo.fullname  = imageInfo.path.replace(/[\/\\\.@]/g, '-');
     imageInfo.hash      = md5(file.contents);
-    imageInfo.data      = 'url(data:' + mimetype + ';' + encoding + ',' + data + ')';
+    imageInfo.data      = 'url("data:' + mimetype + ';' + encoding + ',' + data + '")';
 
     images.push(imageInfo);
   };
