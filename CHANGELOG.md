@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.5 (2017-10-13)
+
+Improvements:
+
+- merged pull request #5
+  + Fix for broken Inlined SVG and imageurl
+
 ## 1.0.4 (2017-08-11)
 
 Improvements:
