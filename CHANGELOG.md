@@ -1,5 +1,13 @@
 # Changelog
 
+## [unreleased]
+
+Improvements:
+
+- use eslint for linting
+- use npm scripts for dev instead of gulp
+- update package dependencies
+
 ## 1.0.5 (2017-10-13)
 
 Improvements:
