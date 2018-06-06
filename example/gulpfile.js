@@ -1,5 +1,5 @@
-var gulp      = require('gulp');
-var sass      = require('gulp-sass');
+var gulp = require('gulp');
+var sass = require('gulp-sass');
 var sassImage = require('..');
 
 var paths = {
@@ -7,25 +7,32 @@ var paths = {
     sass: 'sass/**/*.scss'
 };
 
-gulp.task('sass-image', function (cb) {
+function image() {
     return gulp.src(paths.images)
-            .pipe(sassImage({
-                // targetFile: '_generated-imagehelper.scss', // default target filename is '_sass-image.scss'
-                // template: 'your-sass-image-template.mustache',
-                images_path: 'images/',
-                css_path: 'css/',
-                prefix: 'icon--'
-            }))
-            .pipe(gulp.dest('sass'));
-});
+        .pipe(sassImage({
+            // targetFile: '_sass-image.scss',
+            // template: 'sass-image-template.mustache',
+            images_path: 'images/',
+            css_path: 'css/',
+            prefix: 'icon--'
+        }))
+        .pipe(gulp.dest('sass'));
+}
 
-gulp.task('sass', function (cb) {
+function css() {
     return gulp.src('sass/main.scss')
-            .pipe(sass({ errLogToConsole: true }))
-            .pipe(gulp.dest('./css'));
-});
+        .pipe(sass({ errLogToConsole: true }))
+        .pipe(gulp.dest('./css'));
+}
 
-gulp.task('watch', ['sass-image'], function () {
-    gulp.watch(paths.images, ['sass-image']);
-    gulp.watch(paths.sass, ['sass']);
-});
+function watch() {
+    gulp.watch(paths.images, image);
+    gulp.watch(paths.sass, css);
+}
+
+var compile = gulp.series(image, css);
+
+exports.compile = compile;
+exports.watch = gulp.series(compile, watch);
+
+exports.default = compile;

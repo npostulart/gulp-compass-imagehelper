@@ -22,6 +22,9 @@ npm install gulp-sass-image --save-dev
 ```
 
 ## Example Usage
+
+### gulp < 4
+
 ```javascript
 var sassImage = require('gulp-sass-image');
 
@@ -36,6 +39,26 @@ gulp.task('sass-image', function () {
         }))
         .pipe(gulp.dest('sass'));
 });
+```
+
+### gulp >= 4
+
+```javascript
+var sassImage = require('gulp-sass-image');
+
+function image() {
+    return gulp.src('_sources/images/**/*.+(jpeg|jpg|png|gif|svg)')
+        .pipe(compassImagehelper({
+            targetFile: '_generated-imagehelper.scss', // default target filename is '_sass-image.scss'
+            // template: 'your-sass-image-template.mustache',
+            images_path: 'assets/images/',
+            css_path: 'assets/css/',
+            prefix: 'icon-'
+        }))
+        .pipe(gulp.dest('sass'));
+}
+
+exports.image = image;
 ```
 
 **For a working usage example look into the included [example project](./example/).**

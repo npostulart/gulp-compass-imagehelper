@@ -1,9 +1,15 @@
 # Changelog
 
-## [unreleased]
+## 1.1.0 (2018-06-06)
+
+Changes:
+
+- replace gulp-util according to https://medium.com/gulpjs/gulp-util-ca3b1f9f9ac5
 
 Improvements:
 
+- update README to include gulp 4 setup
+- update example to use gulp 4
 - use eslint for linting
 - use npm scripts for dev instead of gulp
 - update package dependencies

@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('canonical-path');
-const gutil = require('gulp-util');
+const log = require('fancy-log');
+const colors = require('ansi-colors');
+const Vinyl = require('vinyl');
 const Through = require('through');
 const mustache = require('mustache');
 const sizeOf = require('image-size');
@@ -57,10 +59,10 @@ function getSvgDimensions(file) {
             // Check if dimensions could be read, log notice if not
             if (!isSet(res) || !isSet(res.info) || !isSet(res.info.width) || !isSet(res.info.height)) {
                 const filePath = path.relative(options.images_path, file.path);
-                gutil.log(
-                    gutil.colors.yellow('NOTICE'),
+                log(
+                    colors.yellow('NOTICE'),
                     'Image Dimensions could not be determined for:',
-                    gutil.colors.cyan(filePath)
+                    colors.cyan(filePath)
                 );
                 return;
             }
@@ -84,7 +86,7 @@ function bufferContents(file) {
     let encoding = 'base64';
     let data;
 
-    const mimetype = mime.lookup(file.path);
+    const mimetype = mime.getType(file.path);
     let dimensions;
 
     if (mimetype === 'image/svg+xml') {
@@ -121,7 +123,7 @@ function bufferContents(file) {
 function endStream() {
     const template = fs.readFileSync(options.template).toString();
 
-    this.emit('data', new gutil.File({
+    this.emit('data', new Vinyl({
         contents: Buffer.from(mustache.render(template, {
             prefix: options.prefix,
             path_prefix: pathPrefix(),
