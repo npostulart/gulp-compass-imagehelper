@@ -134,6 +134,8 @@ function endStream() {
         path: options.targetFile,
     }));
     this.emit('end');
+
+    images.length = 0
 }
 
 module.exports = (opts = {}) => {
