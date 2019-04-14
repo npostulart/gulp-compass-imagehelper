@@ -13,7 +13,7 @@ const appRoot = require('app-root-path').path;
 
 const svgo = new SVGO();
 
-const images = [];
+let images = [];
 let options = {
     template: path.join(__dirname, 'sass-image-template.mustache'),
     targetFile: '_sass-image.scss',
@@ -137,6 +137,7 @@ function endStream() {
 }
 
 module.exports = (opts = {}) => {
+    images = [];
     options = Object.assign(options, opts);
 
     if (options.includeData !== false) {
