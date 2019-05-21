@@ -1,10 +1,10 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var sassImage = require('..');
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const sassImage = require('..');
 
-var paths = {
+const paths = {
     images: 'images/**/*.+(jpeg|jpg|png|gif|svg)',
-    sass: 'sass/**/*.scss'
+    sass: 'sass/**/*.scss',
 };
 
 function image() {
@@ -14,7 +14,7 @@ function image() {
             // template: 'sass-image-template.mustache',
             images_path: 'images/',
             css_path: 'css/',
-            prefix: 'icon--'
+            prefix: 'icon--',
         }))
         .pipe(gulp.dest('sass'));
 }
@@ -30,7 +30,7 @@ function watch() {
     gulp.watch(paths.sass, css);
 }
 
-var compile = gulp.series(image, css);
+const compile = gulp.series(image, css);
 
 exports.compile = compile;
 exports.watch = gulp.series(compile, watch);
