@@ -1,6 +1,6 @@
 {
   "name": "gulp-sass-image",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "gulp plugin for providing the compass like image functions to node-sass environments.",
   "author": "Niklas Postulart <@niklaspostulart>",
   "contributors": [
