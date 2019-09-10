@@ -97,7 +97,7 @@ function bufferContents(file) {
         data = data.replace(/\s+/g, ' ');
         data = data.replace(
             /[\(\){}\|\\\^~\[\]`"<>#%]/g,
-            match => `%${match[0].charCodeAt(0).toString(16).toUpperCase()}`
+            (match) => `%${match[0].charCodeAt(0).toString(16).toUpperCase()}`
         );
     } else {
         dimensions = sizeOf(file.path);
