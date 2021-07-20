@@ -4,7 +4,8 @@
   "description": "A small usage and output example of the gulp-sass-image plugin ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "gulp watch",
+    "build": "gulp compile"
   },
   "author": "Niklas Postulart <@niklaspostulart>",
   "contributors": [
@@ -13,6 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "gulp": "^4.0.2",
-    "gulp-sass": "^4.0.2"
+    "gulp-sass": "^5.0.0",
+    "node-sass": "^6.0.1"
   }
 }
