@@ -1,31 +1,39 @@
 .icon--battery_50-svg {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2248%22 height=%2248%22 viewBox=%220 0 48 48%22%3E%3Cpath d=%22M28.93 27L22 40V29h-4l1.07-2H14v14.33C14 42.8 15.19 44 16.67 44h14.67c1.47 0 2.67-1.19 2.67-2.67V27h-5.08z%22/%3E%3Cpath fill-opacity=%22.3%22 d=%22M31.33 8H28V4h-8v4h-3.33C15.19 8 14 9.19 14 10.67V27h5.07L26 14v11h4l-1.07 2H34V10.67C34 9.19 32.81 8 31.33 8z%22/%3E%3C/svg%3E"); }
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2248%22 height=%2248%22 viewBox=%220 0 48 48%22%3E%3Cpath d=%22M28.93 27L22 40V29h-4l1.07-2H14v14.33C14 42.8 15.19 44 16.67 44h14.67c1.47 0 2.67-1.19 2.67-2.67V27h-5.08z%22/%3E%3Cpath fill-opacity=%22.3%22 d=%22M31.33 8H28V4h-8v4h-3.33C15.19 8 14 9.19 14 10.67V27h5.07L26 14v11h4l-1.07 2H34V10.67C34 9.19 32.81 8 31.33 8z%22/%3E%3C/svg%3E");
+}
 
 .icons {
   list-style: none;
   padding: 0;
-  display: block; }
-  .icons > li {
-    padding-top: 1em;
-    padding-bottom: 1em; }
-    .icons > li:nth-child(even) {
-      background-color: #eee; }
+  display: block;
+}
+.icons > li {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+.icons > li:nth-child(even) {
+  background-color: #eee;
+}
 
 .icon {
   display: block;
   background-repeat: no-repeat;
-  background-position: 0 50%; }
+  background-position: 0 50%;
+}
 
 .icon--battery_50-png {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAACYktHRAD/h4/MvwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAJJJREFUWMNjYBgFAw0YiVbpjcbfSpw2Jlr7YOhbgD8O2Bn0GUTwqvnP8JrhEsNP3AqY8VpgzCBKwAmMDNwMPAzPyA0iEaJCQZT8OGCkPJhHk+moBaMWjFowagHta7T/lJsyGgejFoxaMGrBqAW0t+APUWb8Jt+CXURZsIN8/4kDO6u/gNUObviLYROD2OhowOAGAMHYHKJlyqIPAAAAAElFTkSuQmCC");
   padding-left: 58px;
-  min-height: 48px; }
+  min-height: 48px;
+}
 
 .icon--battery_50-svg {
   padding-left: 58px;
-  min-height: 48px; }
+  min-height: 48px;
+}
 
 .icon--imageurl {
   background-image: url("../images/battery_50.png");
   padding-left: 58px;
-  min-height: 48px; }
+  min-height: 48px;
+}

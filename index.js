@@ -8,10 +8,8 @@ const mustache = require('mustache');
 const sizeOf = require('image-size');
 const mime = require('mime');
 const md5 = require('md5');
-const SVGO = require('svgo');
+const { optimize } = require('svgo');
 const appRoot = require('app-root-path').path;
-
-const svgo = new SVGO();
 
 let images = [];
 let options = {
@@ -34,7 +32,7 @@ function pathPrefix() {
     }
 
     // Make sure pathPrefix ends with a trailing slash
-    if (result && result.substr(-1) !== '/') {
+    if (result && result.substring(-1) !== '/') {
         result = `${result}/`;
     }
 
@@ -55,7 +53,7 @@ function getSvgDimensions(file) {
         dimensions = sizeOf(file.path);
     } catch (e) {
         // Could not read width/height from svg. Try again with the slower svgo parser:
-        svgo.optimize(file.contents.toString(), (res) => {
+        optimize(file.contents.toString(), (res) => {
             // Check if dimensions could be read, log notice if not
             if (!isSet(res) || !isSet(res.info) || !isSet(res.info.width) || !isSet(res.info.height)) {
                 const filePath = path.relative(options.images_path, file.path);
